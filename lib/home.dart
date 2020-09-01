@@ -32,14 +32,14 @@ class _HomePageState extends State<HomePage> {
     switch (_model) {
       case yolo:
         res = await Tflite.loadModel(
-            model: "assets/satircase_model.tflite",
+            model: "assets/staircase_model.tflite",
             labels: "assets/labels.txt",
         );
         break;
 
       case mobilenet:
         res = await Tflite.loadModel(
-            model: "assets/satircase_model.tflite",
+            model: "assets/staircase_model.tflite",
             labels: "assets/labels.txt",);
         break;
 
@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
 
       default:
         res = await Tflite.loadModel(
-          model: "assets/satircase_model.tflite",
+          model: "assets/staircase_model.tflite",
           labels: "assets/labels.txt",);
     }
     print(res);
