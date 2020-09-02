@@ -1,117 +1,292 @@
+import 'dart:async';
+import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart' show kIsWeb;
+
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
-void main() {
-  runApp(MyApp());
+void main() => runApp(MyApp());
+
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+enum TtsState { playing, stopped, paused, continued }
+
+class _MyAppState extends State<MyApp> {
+  FlutterTts flutterTts;
+  dynamic languages;
+  String language;
+  double volume = 0.5;
+  double pitch = 1.0;
+  double rate = 0.5;
+
+  String _newVoiceText;
+
+  TtsState ttsState = TtsState.stopped;
+
+  get isPlaying => ttsState == TtsState.playing;
+
+  get isStopped => ttsState == TtsState.stopped;
+
+  get isPaused => ttsState == TtsState.paused;
+
+  get isContinued => ttsState == TtsState.continued;
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+  initState() {
+    super.initState();
+    initTts();
   }
-}
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  initTts() {
+    flutterTts = FlutterTts();
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
+    _getLanguages();
 
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+    if (!kIsWeb) {
+      if (Platform.isAndroid) {
+        _getEngines();
+      }
+    }
 
-  final String title;
+    flutterTts.setStartHandler(() {
+      setState(() {
+        print("Playing");
+        ttsState = TtsState.playing;
+      });
+    });
+
+    flutterTts.setCompletionHandler(() {
+      setState(() {
+        print("Complete");
+        ttsState = TtsState.stopped;
+      });
+    });
+
+    flutterTts.setCancelHandler(() {
+      setState(() {
+        print("Cancel");
+        ttsState = TtsState.stopped;
+      });
+    });
+
+    if (kIsWeb || Platform.isIOS) {
+      flutterTts.setPauseHandler(() {
+        setState(() {
+          print("Paused");
+          ttsState = TtsState.paused;
+        });
+      });
+
+      flutterTts.setContinueHandler(() {
+        setState(() {
+          print("Continued");
+          ttsState = TtsState.continued;
+        });
+      });
+    }
+
+    flutterTts.setErrorHandler((msg) {
+      setState(() {
+        print("error: $msg");
+        ttsState = TtsState.stopped;
+      });
+    });
+  }
+
+  Future _getLanguages() async {
+    languages = await flutterTts.getLanguages;
+    if (languages != null) setState(() => languages);
+  }
+
+  Future _getEngines() async {
+    var engines = await flutterTts.getEngines;
+    if (engines != null) {
+      for (dynamic engine in engines) {
+        print(engine);
+      }
+    }
+  }
+
+  Future _speak() async {
+    await flutterTts.setVolume(volume);
+    await flutterTts.setSpeechRate(rate);
+    await flutterTts.setPitch(pitch);
+
+    if (_newVoiceText != null) {
+      if (_newVoiceText.isNotEmpty) {
+        var result = await flutterTts.speak(_newVoiceText);
+        if (result == 1) setState(() => ttsState = TtsState.playing);
+      }
+    }
+  }
+
+  Future _stop() async {
+    var result = await flutterTts.stop();
+    if (result == 1) setState(() => ttsState = TtsState.stopped);
+  }
+
+  Future _pause() async {
+    var result = await flutterTts.pause();
+    if (result == 1) setState(() => ttsState = TtsState.paused);
+  }
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
+  void dispose() {
+    super.dispose();
+    flutterTts.stop();
+  }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  List<DropdownMenuItem<String>> getLanguageDropDownMenuItems() {
+    var items = List<DropdownMenuItem<String>>();
+    for (dynamic type in languages) {
+      items.add(
+          DropdownMenuItem(value: type as String, child: Text(type as String)));
+    }
+    return items;
+  }
 
-  void _incrementCounter() {
+  void changedLanguageDropDownItem(String selectedType) {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      language = selectedType;
+      flutterTts.setLanguage(language);
+    });
+  }
+
+  void _onChange(String text) {
+    setState(() {
+      _newVoiceText = text;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+    return MaterialApp(
+        home: Scaffold(
+            appBar: AppBar(
+              title: Text('Flutter TTS'),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+            body: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(children: [
+                  _inputSection(),
+                  _btnSection(),
+                  languages != null ? _languageDropDownSection() : Text(""),
+                  _buildSliders()
+                ]))));
+  }
+
+  Widget _inputSection() => Container(
+      alignment: Alignment.topCenter,
+      padding: EdgeInsets.only(top: 25.0, left: 25.0, right: 25.0),
+      child: TextField(
+        onChanged: (String value) {
+          _onChange(value);
+        },
+      ));
+
+  Widget _btnSection() {
+    if (!kIsWeb && Platform.isAndroid) {
+      return Container(
+          padding: EdgeInsets.only(top: 50.0),
+          child:
+          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            _buildButtonColumn(Colors.green, Colors.greenAccent,
+                Icons.play_arrow, 'PLAY', _speak),
+            _buildButtonColumn(
+                Colors.red, Colors.redAccent, Icons.stop, 'STOP', _stop),
+          ]));
+    } else {
+      return Container(
+          padding: EdgeInsets.only(top: 50.0),
+          child:
+          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            _buildButtonColumn(Colors.green, Colors.greenAccent,
+                Icons.play_arrow, 'PLAY', _speak),
+            _buildButtonColumn(
+                Colors.red, Colors.redAccent, Icons.stop, 'STOP', _stop),
+            _buildButtonColumn(
+                Colors.blue, Colors.blueAccent, Icons.pause, 'PAUSE', _pause),
+          ]));
+    }
+  }
+
+  Widget _languageDropDownSection() => Container(
+      padding: EdgeInsets.only(top: 50.0),
+      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        DropdownButton(
+          value: language,
+          items: getLanguageDropDownMenuItems(),
+          onChanged: changedLanguageDropDownItem,
+        )
+      ]));
+
+  Column _buildButtonColumn(Color color, Color splashColor, IconData icon,
+      String label, Function func) {
+    return Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(
+              icon: Icon(icon),
+              color: color,
+              splashColor: splashColor,
+              onPressed: () => func()),
+          Container(
+              margin: const EdgeInsets.only(top: 8.0),
+              child: Text(label,
+                  style: TextStyle(
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.w400,
+                      color: color)))
+        ]);
+  }
+
+  Widget _buildSliders() {
+    return Column(
+      children: [_volume(), _pitch(), _rate()],
+    );
+  }
+
+  Widget _volume() {
+    return Slider(
+        value: volume,
+        onChanged: (newVolume) {
+          setState(() => volume = newVolume);
+        },
+        min: 0.0,
+        max: 1.0,
+        divisions: 10,
+        label: "Volume: $volume");
+  }
+
+  Widget _pitch() {
+    return Slider(
+      value: pitch,
+      onChanged: (newPitch) {
+        setState(() => pitch = newPitch);
+      },
+      min: 0.5,
+      max: 2.0,
+      divisions: 15,
+      label: "Pitch: $pitch",
+      activeColor: Colors.red,
+    );
+  }
+
+  Widget _rate() {
+    return Slider(
+      value: rate,
+      onChanged: (newRate) {
+        setState(() => rate = newRate);
+      },
+      min: 0.0,
+      max: 1.0,
+      divisions: 10,
+      label: "Rate: $rate",
+      activeColor: Colors.green,
     );
   }
 }
