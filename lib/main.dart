@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uvea/screens/splashScreen.dart';
+import 'file:///C:/Users/zubxx/StudioProjects/uvea/lib/screens/splashScreen/splashScreen.dart';
 
 void main() {
   runApp(MyApp());
