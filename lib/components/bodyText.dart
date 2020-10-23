@@ -4,7 +4,7 @@ class BodyText extends Text {
   BodyText(
     String text,
   ) : super(
-          text,
+          text,style: TextStyle(color: Colors.red,),textAlign: TextAlign.center,
           //TODO: add styling for body text here
         );
 

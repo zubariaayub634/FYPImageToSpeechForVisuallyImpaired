@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:uvea/components/bodyText.dart';
 import 'package:uvea/components/camera.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:uvea/components/uveaTextButton.dart';
@@ -61,6 +62,11 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
             widget.cameras,
           ),
         ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.transparent,
+        child: BodyText('Swipe left to switch to Money Counter',),
+        elevation: 0,
       ),
     );
   }
