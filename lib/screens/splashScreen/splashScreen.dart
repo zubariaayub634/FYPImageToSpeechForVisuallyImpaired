@@ -5,28 +5,23 @@ import 'package:uvea/components/uveaTextButton.dart';
 import 'package:uvea/screens/perspectivesScreen/perspectivesScreen.dart';
 import 'package:uvea/screens/splashScreen/background.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends StatelessWidget {
   final List<CameraDescription> cameras;
+
   SplashScreen({
     Key key,
     this.cameras,
   }) : super(
           key: key,
         );
-  @override
-  _SplashScreenState createState() => _SplashScreenState();
-}
 
-class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
         child: Background(
           child: SingleChildScrollView(
             child: Column(
-              //mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
                   "splashScreen",
@@ -41,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       MaterialPageRoute(
                         builder: (context) {
                           return PerspectivesScreen(
-                            cameras: widget.cameras,
+                            cameras: cameras,
                           );
                         },
                       ),

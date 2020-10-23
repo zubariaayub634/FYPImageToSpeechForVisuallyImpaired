@@ -5,16 +5,11 @@ import 'package:uvea/components/camera.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:uvea/components/uveaTextButton.dart';
 
-class CollisionPreventionScreen extends StatefulWidget {
+class CollisionPreventionScreen extends StatelessWidget {
   final List<CameraDescription> cameras;
 
   CollisionPreventionScreen({Key key, this.cameras}) : super(key: key);
-  @override
-  _CollisionPreventionScreenState createState() =>
-      _CollisionPreventionScreenState();
-}
 
-class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +54,7 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
                 ]).show();
           },
           child: Camera(
-            widget.cameras,
+            cameras,
           ),
         ),
       ),

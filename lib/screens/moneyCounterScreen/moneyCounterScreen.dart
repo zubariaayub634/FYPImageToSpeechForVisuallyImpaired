@@ -5,15 +5,11 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:uvea/components/uveaTextButton.dart';
 import 'package:uvea/components/camera.dart';
 
-class MoneyCounterScreen extends StatefulWidget {
+class MoneyCounterScreen extends StatelessWidget {
   final List<CameraDescription> cameras;
 
   MoneyCounterScreen({Key key, this.cameras}) : super(key: key);
-  @override
-  _MoneyCounterScreenState createState() => _MoneyCounterScreenState();
-}
 
-class _MoneyCounterScreenState extends State<MoneyCounterScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -59,7 +55,7 @@ class _MoneyCounterScreenState extends State<MoneyCounterScreen> {
                 ]).show();
           },
           child: Camera(
-            widget.cameras,
+            cameras,
           ),
         ),
       ),

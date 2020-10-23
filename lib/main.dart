@@ -1,6 +1,5 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:uvea/screens/collisionPreventionScreen/collisionPreventionScreen.dart';
 import 'package:uvea/screens/splashScreen/splashScreen.dart';
 
 List<CameraDescription> cameras;
@@ -15,25 +14,15 @@ Future<Null> main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'UVEA',
       theme: ThemeData(
-          //primaryColor: kPrimaryTextColor,
-          //scaffoldBackgroundColor: kScaffoldBackgroundColor,
           ),
-      initialRoute: "splashScreen",
-      routes: {
-        "splashScreen": (context) => SplashScreen(cameras: cameras),
-      },
+      home: SplashScreen(cameras: cameras),
     );
   }
 }
