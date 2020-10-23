@@ -37,11 +37,11 @@ class _CameraState extends State<Camera> {
     }
   }
 
-  @override
+  /*@override
   void dispose() {
     controller?.dispose();
     super.dispose();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
