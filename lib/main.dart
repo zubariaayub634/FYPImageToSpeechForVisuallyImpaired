@@ -1,7 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:uvea/screens/collisionPreventionScreen/collisionPreventionScreen.dart';
 import 'package:uvea/screens/splashScreen/splashScreen.dart';
-import 'package:uvea/screens/mainPerspectiveScreen/mainPerspectiveScreen.dart';
 
 List<CameraDescription> cameras;
 
@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
       initialRoute: "splashScreen",
       routes: {
         "splashScreen": (context) => SplashScreen(cameras: cameras),
-        "mainPerspectiveScreen": (context) => MainPerspectiveScreen(),
+        "mainPerspectiveScreen": (context) => CollisionPreventionScreen(),
       },
     );
   }

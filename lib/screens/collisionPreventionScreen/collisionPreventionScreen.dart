@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:uvea/components/camera.dart';
 
-class MainPerspectiveScreen extends StatefulWidget {
+class CollisionPreventionScreen extends StatefulWidget {
   final List<CameraDescription> cameras;
 
-  MainPerspectiveScreen({Key key,this.cameras}) : super(key: key);
+  CollisionPreventionScreen({Key key,this.cameras}) : super(key: key);
   @override
-  _MainPerspectiveScreenState createState() => _MainPerspectiveScreenState();
+  _CollisionPreventionScreenState createState() => _CollisionPreventionScreenState();
 }
 
-class _MainPerspectiveScreenState extends State<MainPerspectiveScreen> {
+class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
