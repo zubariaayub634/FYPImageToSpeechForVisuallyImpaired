@@ -33,7 +33,6 @@ class _MyAppState extends State<MyApp> {
       initialRoute: "splashScreen",
       routes: {
         "splashScreen": (context) => SplashScreen(cameras: cameras),
-        "mainPerspectiveScreen": (context) => CollisionPreventionScreen(),
       },
     );
   }

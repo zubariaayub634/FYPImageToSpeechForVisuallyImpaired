@@ -2,7 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:uvea/components/bodyText.dart';
 import 'package:uvea/components/uveaTextButton.dart';
-import 'package:uvea/screens/collisionPreventionScreen/collisionPreventionScreen.dart';
+import 'package:uvea/screens/perspectivesScreen/perspectivesScreen.dart';
 import 'package:uvea/screens/splashScreen/background.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return CollisionPreventionScreen(
+                          return PerspectivesScreen(
                             cameras: widget.cameras,
                           );
                         },
