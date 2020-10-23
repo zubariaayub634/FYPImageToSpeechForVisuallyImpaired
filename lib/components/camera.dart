@@ -15,7 +15,6 @@ class Camera extends StatefulWidget {
 
 class _CameraState extends State<Camera> {
   CameraController controller;
-  bool isDetecting = false;
 
   @override
   void initState() {
@@ -36,12 +35,6 @@ class _CameraState extends State<Camera> {
       });
     }
   }
-
-  /*@override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
-  }*/
 
   @override
   Widget build(BuildContext context) {
