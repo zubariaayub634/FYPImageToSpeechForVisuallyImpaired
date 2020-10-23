@@ -18,11 +18,12 @@ class Background extends StatelessWidget {
         alignment: Alignment.center,
         children: <Widget>[
           Positioned(
-            top: 20,
+            top: 130,
             left: 0,
             child: Image.asset(
               "assets/uveaLogo.png",
-              width: size.width,// * 0.35,
+              height: 180,
+              width: size.width, // * 0.35,
             ),
           ),
           child,

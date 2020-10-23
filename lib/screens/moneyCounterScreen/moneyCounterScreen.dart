@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:uvea/components/uveaTextButton.dart';
 import 'package:uvea/components/camera.dart';
+import 'package:uvea/components/bodyText.dart';
 
 class MoneyCounterScreen extends StatelessWidget {
   final List<CameraDescription> cameras;
@@ -58,6 +59,13 @@ class MoneyCounterScreen extends StatelessWidget {
             cameras,
           ),
         ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.black,
+        child: BodyText(
+          'Swipe right to switch to Collision Prevention',
+        ),
+        elevation: 0,
       ),
     );
   }

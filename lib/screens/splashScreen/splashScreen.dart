@@ -5,6 +5,9 @@ import 'package:uvea/components/uveaTextButton.dart';
 import 'package:uvea/screens/perspectivesScreen/perspectivesScreen.dart';
 import 'package:uvea/screens/splashScreen/background.dart';
 
+import '../../components/bodyText.dart';
+import 'background.dart';
+
 class SplashScreen extends StatelessWidget {
   final List<CameraDescription> cameras;
 
@@ -18,14 +21,13 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: SafeArea(
         child: Background(
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                Text(
-                  "splashScreen",
-                ),
+                Padding(padding: EdgeInsets.only(top: 120)),
                 UveaTextButton(
                   "Get Started",
                   onPressed: () {
@@ -43,8 +45,17 @@ class SplashScreen extends StatelessWidget {
                     );
                   },
                 ),
+                Padding(padding: EdgeInsets.only(top: 20)),
+                BodyText("A mobile application for day-to-day aid of"),
+                BodyText("visually impaired."),
+                Padding(padding: EdgeInsets.only(top: 50)),
                 BodyText(
-                  "Add your text here! Don't forget to style the text in BodyText class!",
+                  "We recommend taking help from a visually-abled ",
+                  size: 15,
+                ),
+                BodyText(
+                  "friend or family member to help set up.",
+                  size: 15,
                 ),
               ],
             ),
