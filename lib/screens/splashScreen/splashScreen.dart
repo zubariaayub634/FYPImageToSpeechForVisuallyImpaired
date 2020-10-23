@@ -1,10 +1,18 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:uvea/components/bodyText.dart';
 import 'package:uvea/components/uveaTextButton.dart';
+import 'package:uvea/screens/mainPerspectiveScreen/mainPerspectiveScreen.dart';
 import 'package:uvea/screens/splashScreen/background.dart';
 
 class SplashScreen extends StatefulWidget {
-  SplashScreen({Key key}) : super(key: key);
+  final List<CameraDescription> cameras;
+  SplashScreen({
+    Key key,
+    this.cameras,
+  }) : super(
+          key: key,
+        );
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -28,6 +36,16 @@ class _SplashScreenState extends State<SplashScreen> {
                   onPressed: () {
                     print("button pressed");
                     //TODO: implement onPressed for Get Started button
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return MainPerspectiveScreen(
+                            cameras: widget.cameras,
+                          );
+                        },
+                      ),
+                    );
                   },
                 ),
                 BodyText(
