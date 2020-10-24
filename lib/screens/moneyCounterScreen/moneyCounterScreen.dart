@@ -27,7 +27,10 @@ class MoneyCounterScreen extends StatelessWidget {
             print("tapped on camera");
             Alert(
                 style: AlertStyle(
-                  backgroundColor: Colors.blueGrey,
+                  backgroundColor:
+                      Color(0x5F90A4AE), //Colors.blueGrey//Color(0x551761a0),
+                  titleStyle: TextStyle(color: Colors.white),
+                  overlayColor: Color(0xCF000000),
                 ),
                 context: context,
                 title:
@@ -35,7 +38,7 @@ class MoneyCounterScreen extends StatelessWidget {
                 content: Column(
                   children: <Widget>[
                     SizedBox(
-                      height: 10,
+                      height: 8,
                     ),
                     UveaTextButton(
                       "OK",
@@ -44,7 +47,7 @@ class MoneyCounterScreen extends StatelessWidget {
                       },
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 8,
                     ),
                   ],
                 ),

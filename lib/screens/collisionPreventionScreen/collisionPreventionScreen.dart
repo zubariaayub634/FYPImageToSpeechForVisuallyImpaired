@@ -25,15 +25,18 @@ class CollisionPreventionScreen extends StatelessWidget {
             print("tapped on camera");
             Alert(
                 style: AlertStyle(
-                  backgroundColor: Colors.blueGrey,
-                ),
+                  backgroundColor:
+                      Color(0x5F90A4AE), //Colors.blueGrey//Color(0x551761a0),
+                  titleStyle: TextStyle(color: Colors.white),
+                  overlayColor: Color(0xCF000000),
+                ), //Colors.black54),
                 context: context,
                 title:
                     "You tapped on the camera. This is a dummy. You will see popup collision prevention messages in the next version of the product.",
                 content: Column(
                   children: <Widget>[
                     SizedBox(
-                      height: 10,
+                      height: 8,
                     ),
                     UveaTextButton(
                       "OK",
@@ -42,7 +45,7 @@ class CollisionPreventionScreen extends StatelessWidget {
                       },
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 8,
                     ),
                   ],
                 ),

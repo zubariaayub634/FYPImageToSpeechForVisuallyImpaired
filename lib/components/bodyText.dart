@@ -7,7 +7,6 @@ class BodyText extends Text {
           text,
           style: TextStyle(
               color: textColor, fontSize: size, backgroundColor: Colors.black),
->>>>>>> e6bb5c50f10da166378970d96dc9ba21405d126f
           textAlign: TextAlign.center,
           //TODO: add styling for body text here
         );
