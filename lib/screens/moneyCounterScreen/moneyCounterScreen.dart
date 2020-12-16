@@ -8,8 +8,11 @@ import 'package:uvea/components/bodyText.dart';
 
 class MoneyCounterScreen extends StatelessWidget {
   final List<CameraDescription> cameras;
+  final Camera camera;
 
-  MoneyCounterScreen({Key key, this.cameras}) : super(key: key);
+  MoneyCounterScreen({Key key, this.cameras})
+      : camera = Camera(cameras),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +61,7 @@ class MoneyCounterScreen extends StatelessWidget {
                   ),
                 ]).show();
           },
-          child: Camera(
-            cameras,
-          ),
+          child: camera,
         ),
       ),
       bottomNavigationBar: BottomAppBar(

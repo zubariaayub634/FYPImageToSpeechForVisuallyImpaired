@@ -7,8 +7,9 @@ import 'package:uvea/components/uveaTextButton.dart';
 
 class CollisionPreventionScreen extends StatelessWidget {
   final List<CameraDescription> cameras;
+  final Camera camera;
 
-  CollisionPreventionScreen({Key key, this.cameras}) : super(key: key);
+  CollisionPreventionScreen({Key key, this.cameras}) :camera=Camera(cameras), super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +57,7 @@ class CollisionPreventionScreen extends StatelessWidget {
                   ),
                 ]).show();
           },
-          child: Camera(
-            cameras,
-          ),
+          child: camera,
         ),
       ),
       bottomNavigationBar: BottomAppBar(
