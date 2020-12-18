@@ -63,7 +63,7 @@ class CollisionPreventionScreen extends StatelessWidget {
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
         child: BodyText(
-          'Swipe left to switch to Money Counter',
+          'Swipe left to switch to Money Classifier',
         ),
         elevation: 0,
       ),
