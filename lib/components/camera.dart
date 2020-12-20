@@ -11,7 +11,7 @@ class Camera extends StatefulWidget {
   Camera(this.cameras)
       : controller = CameraController(
           cameras[0],
-          ResolutionPreset.high,
+          ResolutionPreset.high, //change to ResolutionPreset.low if frame drop rate is too high
         ) {
     if (cameras == null || cameras.length < 1) {
       print('No camera is found');

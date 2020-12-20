@@ -19,9 +19,9 @@ class MoneyClassifierModel {
     print("model loaded");
   }
 
-  String predict(CameraImage img) {
+  Future<String> predict(CameraImage img) async{
     int startTime = new DateTime.now().millisecondsSinceEpoch;
-    Tflite.runModelOnFrame(
+    await Tflite.runModelOnFrame(
       bytesList: img.planes.map((plane) {
         return plane.bytes;
       }).toList(),
@@ -32,6 +32,7 @@ class MoneyClassifierModel {
       int endTime = new DateTime.now().millisecondsSinceEpoch;
       print("Detection took ${endTime - startTime}");
       print(recognitions.runtimeType);
+      print(recognitions);
 
       return recognitions.toString();
 

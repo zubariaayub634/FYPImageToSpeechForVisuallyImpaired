@@ -1,8 +1,12 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:tflite/tflite.dart';
 import 'package:uvea/components/uveaTextButton.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
 import 'package:uvea/components/camera.dart';
 import 'package:uvea/components/bodyText.dart';
 import 'moneyClassifierModel.dart';
@@ -31,9 +35,11 @@ class MoneyClassifierScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: MaterialButton(
-          onPressed: () {
+          onPressed: () async {
             print("tapped on camera");
-            camera.controller.startImageStream((CameraImage img) {
+            await camera.controller.startImageStream((CameraImage img) async {
+              camera.controller.stopImageStream();
+              print("camera stream going on");
               /*if (!isDetecting) {
                 isDetecting = true;
 
@@ -94,23 +100,39 @@ class MoneyClassifierScreen extends StatelessWidget {
                 }
               }*/
               //print("image stream started");
-            });
-            Alert(
-                style: AlertStyle(
-                  backgroundColor:
-                      Color(0x5F90A4AE), //Colors.blueGrey//Color(0x551761a0),
-                  overlayColor: Color(0xCF000000),
-                ),
-                context: context,
-                title: "",
-                content: moneyModel.modelLoaded
-                    ? Column(
+              try {
+                int startTime = new DateTime.now().millisecondsSinceEpoch;
+                await Tflite.runModelOnFrame(
+                  bytesList: img.planes.map((plane) {
+                    return plane.bytes;
+                  }).toList(),
+                  imageHeight: img.height,
+                  imageWidth: img.width,
+                  numResults: 2,
+                ).then((recognitions) {
+                  int endTime = new DateTime.now().millisecondsSinceEpoch;
+                  print("Detection took ${endTime - startTime}");
+                  print(recognitions.runtimeType);
+                  print(recognitions);
+
+                  //return recognitions.toString();
+
+                  Alert(
+                      style: AlertStyle(
+                        backgroundColor: Color(
+                            0x5F90A4AE), //Colors.blueGrey//Color(0x551761a0),
+                        overlayColor: Color(0xCF000000),
+                      ),
+                      context: context,
+                      title: "",
+                      content: moneyModel.modelLoaded
+                          ? Column(
                         children: <Widget>[
                           SizedBox(
                             height: 8,
                           ),
                           Text(
-                            "You tapped on the camera. This is a dummy. You will see popup money classifying messages in the next version of the product.",
+                            recognitions.toString(),
                             style: TextStyle(color: Colors.white),
                           ),
                           SizedBox(
@@ -127,16 +149,47 @@ class MoneyClassifierScreen extends StatelessWidget {
                           ),
                         ],
                       )
-                    : Text(
+                          : Text(
                         "Model is loading, please try again.",
                         style: TextStyle(color: Colors.white),
                       ),
-                buttons: [
-                  DialogButton(
-                    color: Colors.white,
-                    height: 0,
-                  ),
-                ]).show();
+                      buttons: [
+                        DialogButton(
+                          color: Colors.white,
+                          height: 0,
+                        ),
+                      ]).show();
+
+                  //widget.setRecognitions(recognitions, img.height, img.width);
+
+                  //isDetecting = false;
+                });
+
+              } on PlatformException catch (e) {
+                print(e.message);
+              }
+            });
+
+            /*try {
+              // Ensure that the camera is initialized.
+              //await _initializeControllerFuture;
+
+              // Construct the path where the image should be saved using the path
+              // package.
+              final path = join(
+                // Store the picture in the temp directory.
+                // Find the temp directory using the `path_provider` plugin.
+                  (await getTemporaryDirectory()).path,
+            '${DateTime.now()}.png',
+            );
+
+            // Attempt to take a picture and log where it's been saved.
+            await camera.controller.takePicture(path);
+            print("image saved at $path");
+            } catch (e) {
+            // If an error occurs, log the error to the console.
+            print(e);
+            }*/
           },
           child: camera,
         ),
