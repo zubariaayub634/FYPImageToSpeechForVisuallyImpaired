@@ -5,15 +5,15 @@ import 'dart:math' as math;
 typedef void Callback(List<dynamic> list, int h, int w);
 
 class Camera extends StatefulWidget {
-  final List<CameraDescription> cameras;
+  final CameraDescription camera;
   final CameraController controller;
 
-  Camera(this.cameras)
+  Camera(this.camera)
       : controller = CameraController(
-          cameras[0],
+          camera,
           ResolutionPreset.high, //change to ResolutionPreset.low if frame drop rate is too high
         ) {
-    if (cameras == null || cameras.length < 1) {
+    if (camera == null) {
       print('No camera is found');
     } else {
       controller.initialize().then((_) {

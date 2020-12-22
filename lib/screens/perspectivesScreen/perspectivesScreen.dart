@@ -2,26 +2,27 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:uvea/screens/collisionPreventionScreen/collisionPreventionScreen.dart';
 import 'package:uvea/screens/moneyClassifierScreen/moneyClassifierScreen.dart';
+import 'package:uvea/components/camera.dart';
 
 class PerspectivesScreen extends StatelessWidget {
   final List<CameraDescription> cameras;
 
-  final Widget collisionPreventer;
-  final Widget moneyClassifier;
+  final Camera camera;
 
   PerspectivesScreen({Key key, this.cameras})
-      : collisionPreventer = (CollisionPreventionScreen(
-          cameras: cameras,
-        )),
-        moneyClassifier = (MoneyClassifierScreen(
-          cameras: cameras,
-        )),
+      : camera = Camera(cameras[0]),
         super(key: key);
   final controller = PageController(
     initialPage: 0,
   );
   @override
   Widget build(BuildContext context) {
+    final Widget collisionPreventer = (CollisionPreventionScreen(
+      camera: camera,
+    ));
+    final Widget moneyClassifier = (MoneyClassifierScreen(
+      camera: camera,
+    ));
     return PageView(
       controller: controller,
       children: <Widget>[

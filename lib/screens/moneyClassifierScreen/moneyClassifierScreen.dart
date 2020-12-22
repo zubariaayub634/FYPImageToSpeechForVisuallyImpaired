@@ -10,14 +10,11 @@ import 'package:uvea/components/bodyText.dart';
 import 'moneyClassifierModel.dart';
 
 class MoneyClassifierScreen extends StatelessWidget {
-  final List<CameraDescription> cameras;
   final Camera camera;
   final MoneyClassifierModel moneyModel = MoneyClassifierModel(
       "assets/moneyModel/model_unquant.tflite", "assets/moneyModel/labels.txt");
 
-  MoneyClassifierScreen({Key key, this.cameras})
-      : camera = Camera(cameras),
-        super(key: key) {
+  MoneyClassifierScreen({Key key, this.camera}) : super(key: key) {
     moneyModel.loadModel();
   }
 
