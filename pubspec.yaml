@@ -29,3 +29,4 @@ flutter:
     - assets/moneyModel/labels.txt
     - assets/fdwModel/labels.txt
     - assets/fdwModel/model.tflite
+    - assets/fdwModel/model_unquant.tflite

@@ -12,7 +12,7 @@ import 'fdwClassifierModel.dart';
 class CollisionPreventionScreen extends StatelessWidget {
   final Camera camera;
   final FDWClassifierModel fdwModel = FDWClassifierModel(
-      "assets/fdwModel/model.tflite", "assets/fdwModel/labels.txt");
+      "assets/fdwModel/model_unquant.tflite", "assets/fdwModel/labels.txt");
 
   CollisionPreventionScreen({Key key, this.camera}) : super(key: key) {
     //fdwModel.loadModel();
