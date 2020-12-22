@@ -21,6 +21,8 @@ class MoneyClassifierModel {
 
   Future<String> predict(CameraImage img) async{
     int startTime = new DateTime.now().millisecondsSinceEpoch;
+    await Tflite.close();
+    await loadModel();
     await Tflite.runModelOnFrame(
       bytesList: img.planes.map((plane) {
         return plane.bytes;

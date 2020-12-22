@@ -15,7 +15,7 @@ class MoneyClassifierScreen extends StatelessWidget {
       "assets/moneyModel/model_unquant.tflite", "assets/moneyModel/labels.txt");
 
   MoneyClassifierScreen({Key key, this.camera}) : super(key: key) {
-    moneyModel.loadModel();
+    //moneyModel.loadModel();
   }
 
   @override
@@ -37,6 +37,8 @@ class MoneyClassifierScreen extends StatelessWidget {
               print("camera stream going on");
               try {
                 int startTime = new DateTime.now().millisecondsSinceEpoch;
+                //await Tflite.close();
+                await moneyModel.loadModel();
                 await Tflite.runModelOnFrame(
                   bytesList: img.planes.map((plane) {
                     return plane.bytes;
@@ -60,8 +62,8 @@ class MoneyClassifierScreen extends StatelessWidget {
                       ),
                       context: context,
                       title: "",
-                      content: moneyModel.modelLoaded
-                          ? Column(
+                      content: //moneyModel.modelLoaded ?
+                      Column(
                               children: <Widget>[
                                 SizedBox(
                                   height: 8,
@@ -84,10 +86,10 @@ class MoneyClassifierScreen extends StatelessWidget {
                                 ),
                               ],
                             )
-                          : Text(
+                          /*: Text(
                               "Model is loading, please try again.",
                               style: TextStyle(color: Colors.white),
-                            ),
+                            )*/,
                       buttons: [
                         DialogButton(
                           color: Colors.white,

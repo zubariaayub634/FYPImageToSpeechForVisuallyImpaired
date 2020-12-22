@@ -15,7 +15,7 @@ class CollisionPreventionScreen extends StatelessWidget {
       "assets/fdwModel/model.tflite", "assets/fdwModel/labels.txt");
 
   CollisionPreventionScreen({Key key, this.camera}) : super(key: key) {
-    fdwModel.loadModel();
+    //fdwModel.loadModel();
   }
 
   @override
@@ -36,6 +36,8 @@ class CollisionPreventionScreen extends StatelessWidget {
               print("camera stream going on");
               try {
                 int startTime = new DateTime.now().millisecondsSinceEpoch;
+                //await Tflite.close();
+                await fdwModel.loadModel();
                 await Tflite.runModelOnFrame(
                   bytesList: img.planes.map((plane) {
                     return plane.bytes;
@@ -59,8 +61,8 @@ class CollisionPreventionScreen extends StatelessWidget {
                       ),
                       context: context,
                       title: "",
-                      content: fdwModel.modelLoaded
-                          ? Column(
+                      content: //fdwModel.modelLoaded ?
+                      Column(
                               children: <Widget>[
                                 SizedBox(
                                   height: 8,
@@ -83,10 +85,10 @@ class CollisionPreventionScreen extends StatelessWidget {
                                 ),
                               ],
                             )
-                          : Text(
+                          /*: Text(
                               "Model is loading, please try again.",
                               style: TextStyle(color: Colors.white),
-                            ),
+                            )*/,
                       buttons: [
                         DialogButton(
                           color: Colors.white,
