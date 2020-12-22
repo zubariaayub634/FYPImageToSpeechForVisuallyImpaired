@@ -12,9 +12,11 @@ import 'fdwClassifierModel.dart';
 class CollisionPreventionScreen extends StatelessWidget {
   final Camera camera;
   final FDWClassifierModel fdwModel = FDWClassifierModel(
-      "assets/moneyModel/model_unquant.tflite", "assets/moneyModel/labels.txt");
+      "assets/fdwModel/model.tflite", "assets/fdwModel/labels.txt");
 
-  CollisionPreventionScreen({Key key, this.camera}) : super(key: key){fdwModel.loadModel();}
+  CollisionPreventionScreen({Key key, this.camera}) : super(key: key) {
+    fdwModel.loadModel();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class CollisionPreventionScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: MaterialButton(
-          onPressed: ()async {
+          onPressed: () async {
             print("tapped on camera");
             await camera.controller.startImageStream((CameraImage img) async {
               camera.controller.stopImageStream();
@@ -59,32 +61,32 @@ class CollisionPreventionScreen extends StatelessWidget {
                       title: "",
                       content: fdwModel.modelLoaded
                           ? Column(
-                        children: <Widget>[
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                            recognitions.toString(),
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          UveaTextButton(
-                            "OK",
-                            onPressed: () async {
-                              Navigator.pop(context);
-                            },
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                        ],
-                      )
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text(
+                                  recognitions.toString(),
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                UveaTextButton(
+                                  "OK",
+                                  onPressed: () async {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                              ],
+                            )
                           : Text(
-                        "Model is loading, please try again.",
-                        style: TextStyle(color: Colors.white),
-                      ),
+                              "Model is loading, please try again.",
+                              style: TextStyle(color: Colors.white),
+                            ),
                       buttons: [
                         DialogButton(
                           color: Colors.white,
@@ -95,7 +97,8 @@ class CollisionPreventionScreen extends StatelessWidget {
               } on PlatformException catch (e) {
                 print(e.message);
               }
-            });},
+            });
+          },
           child: camera,
         ),
       ),
