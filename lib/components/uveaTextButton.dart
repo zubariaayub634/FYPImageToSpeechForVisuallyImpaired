@@ -6,8 +6,8 @@ class UveaTextButton extends MaterialButton {
       : super(
           child: Text(text, //TODO: add text styling for text buttons here
               style: TextStyle(color: Colors.white, fontFamily: 'Poppins')),
-          height: 45,
-          minWidth: 180,
+          height: 55,
+          minWidth: 275,
           color: buttonColor, //TODO: change color of text buttons here
           onPressed: onPressed,
         );

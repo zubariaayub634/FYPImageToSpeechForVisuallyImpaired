@@ -14,19 +14,17 @@ class Background extends StatelessWidget {
       height: size.height,
       width: double.infinity,
       // Here i can use size.width but use double.infinity because both work as a same
-      child: Stack(
-        alignment: Alignment.center,
+      child: Column(
         children: <Widget>[
-          Positioned(
-            top: 130,
-            left: 0,
-            child: Image.asset(
-              "assets/uveaLogo.png",
-              height: 180,
-              width: size.width, // * 0.35,
-            ),
+          //Positioned(
+          // top: 130,
+          //left: 0,
+          Image.asset(
+            "assets/onboardingLogo.png",
+            height: 380,
+            width: 100, // * 0.35,
           ),
-          child,
+          //),
         ],
       ),
     );

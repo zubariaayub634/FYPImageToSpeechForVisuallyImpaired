@@ -15,8 +15,9 @@ dependencies:
   camera: ^0.5.8+11
   rflutter_alert: ^1.0.3
   tflite: ^1.1.1
-  path_provider: ^1.6.24
+  path_provider: ^2.0.1
   path: ^1.7.0
+  shared_preferences: ^2.0.5
 
 dev_dependencies:
   flutter_test:
@@ -25,6 +26,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/uveaLogo.png
+    - assets/onboardingLogo.png
     - assets/moneyModel/model_unquant.tflite
     - assets/moneyModel/labels.txt
     - assets/fdwModel/labels.txt

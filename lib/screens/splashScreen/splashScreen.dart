@@ -2,13 +2,77 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:uvea/components/bodyText.dart';
 import 'package:uvea/components/uveaTextButton.dart';
+import 'package:uvea/screens/onboardingScreen/onboardingScreen.dart';
 import 'package:uvea/screens/perspectivesScreen/perspectivesScreen.dart';
-import 'package:uvea/screens/splashScreen/background.dart';
+import 'file:///C:/Users/mesha/Desktop/Semester%208/FYP%202/Uvea/lib/screens/onboardingScreen/background.dart';
 
 import '../../components/bodyText.dart';
-import 'background.dart';
+import 'dart:async';
+import 'package:camera/camera.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
+  final List<CameraDescription> cameras;
+  final firstTime;
+
+  SplashScreen({Key key, this.cameras, this.firstTime}) : super(key: key);
+  @override
+  _SplashScreen createState() => _SplashScreen();
+}
+
+void callScreen(context, firstTime, camera) {
+  if (firstTime == 0 || firstTime == null) {
+    Timer(
+      Duration(seconds: 3),
+      () => Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => onboardingScreen(
+            cameras: camera,
+          ),
+        ),
+      ),
+    );
+  } else {
+    Timer(
+      Duration(seconds: 3),
+      () => Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PerspectivesScreen(
+            cameras: camera,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SplashScreen extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    callScreen(context, widget.firstTime, widget.cameras);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      color: Colors.black,
+      child: Positioned(
+        top: 130,
+        left: 0,
+        child: Image.asset(
+          "assets/uveaLogo.png",
+          height: 180,
+          width: size.width, // * 0.35,
+        ),
+      ),
+    );
+  }
+}
+
+/*class SplashScreen extends StatelessWidget {
   final List<CameraDescription> cameras;
 
   SplashScreen({
@@ -19,6 +83,7 @@ class SplashScreen extends StatelessWidget {
         );
 
   @override
+  void callCamera() {}
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
@@ -27,7 +92,7 @@ class SplashScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                Padding(padding: EdgeInsets.only(top: 120)),
+                Padding(padding: EdgeInsets.only(top: 130)),
                 UveaTextButton(
                   "Get Started",
                   onPressed: () {
@@ -64,4 +129,4 @@ class SplashScreen extends StatelessWidget {
       ),
     );
   }
-}
+}*/
