@@ -8,6 +8,7 @@ import 'package:uvea/components/bodyText.dart';
 import 'package:uvea/components/camera.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:uvea/components/uveaTextButton.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 import 'fdwClassifierModel.dart';
 
@@ -30,8 +31,8 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
   Timer timer;
   void initState() {
     super.initState();
-    timer = Timer.periodic(
-        Duration(seconds: 100), (Timer t) => takePicture(context));
+    timer =
+        Timer.periodic(Duration(seconds: 5), (Timer t) => takePicture(context));
   }
 
   /*callTimer(context) {
@@ -41,6 +42,13 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
       takePicture(context);
     });
   }*/
+
+  getOutput(List) {
+    var str = List.toString();
+    var str2 = str.split(",");
+    var str3 = str2[2].split(" ");
+    flutterTts.speak(str3[3]);
+  }
 
   takePicture(context) async {
     print("tapped on camera");
@@ -66,8 +74,10 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
             print("Detection took ${endTime - startTime}");
             print(recognitions.runtimeType);
             print(recognitions);
+            getOutput(recognitions.toList()[0]);
+
             //return recognitions.toString();
-            Alert(
+            /*Alert(
                 style: AlertStyle(
                   backgroundColor:
                       Color(0x5F90A4AE), //Colors.blueGrey//Color(0x551761a0),
@@ -108,7 +118,7 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
                     color: Colors.white,
                     height: 0,
                   ),
-                ]).show();
+                ]).show();*/
           });
         } on PlatformException catch (e) {
           print(e.message);
@@ -117,8 +127,11 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
     );
   }
 
+  final FlutterTts flutterTts = FlutterTts();
   @override
   Widget build(BuildContext context) {
+    flutterTts.speak('Collision Prevention');
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(

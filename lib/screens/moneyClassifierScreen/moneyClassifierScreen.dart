@@ -9,6 +9,7 @@ import 'package:uvea/components/camera.dart';
 import 'package:uvea/components/bodyText.dart';
 import 'moneyClassifierModel.dart';
 import 'dart:async';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class MoneyClassifierScreen extends StatefulWidget {
   final Camera camera;
@@ -26,10 +27,18 @@ class _MoneyClassifierScreenState extends State<MoneyClassifierScreen> {
       "assets/moneyModel/model_unquant.tflite", "assets/moneyModel/labels.txt");
 
   Timer timer;
+
   void initState() {
     super.initState();
     timer =
-        Timer.periodic(Duration(seconds: 5), (Timer t) => takePicture(context));
+        Timer.periodic(Duration(seconds: 3), (Timer t) => takePicture(context));
+  }
+
+  getOutput(List) {
+    var str = List.toString();
+    var str2 = str.split(",");
+    var str3 = str2[2].split(" ");
+    flutterTts.speak(str3[3] + 'Rupees');
   }
 
   takePicture(context) async {
@@ -56,8 +65,10 @@ class _MoneyClassifierScreenState extends State<MoneyClassifierScreen> {
             print("Detection took ${endTime - startTime}");
             print(recognitions.runtimeType);
             print(recognitions);
+            getOutput(recognitions.toList()[0]);
+
             //return recognitions.toString();
-            Alert(
+            /*Alert(
                 style: AlertStyle(
                   backgroundColor:
                       Color(0x5F90A4AE), //Colors.blueGrey//Color(0x551761a0),
@@ -98,7 +109,7 @@ class _MoneyClassifierScreenState extends State<MoneyClassifierScreen> {
                     color: Colors.white,
                     height: 0,
                   ),
-                ]).show();
+                ]).show();*/
           });
         } on PlatformException catch (e) {
           print(e.message);
@@ -107,8 +118,11 @@ class _MoneyClassifierScreenState extends State<MoneyClassifierScreen> {
     );
   }
 
+  final FlutterTts flutterTts = FlutterTts();
+
   @override
   Widget build(BuildContext context) {
+    flutterTts.speak('Money Classifier');
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.transparent,
