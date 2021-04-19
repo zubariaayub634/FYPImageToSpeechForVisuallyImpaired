@@ -66,50 +66,6 @@ class _MoneyClassifierScreenState extends State<MoneyClassifierScreen> {
             print(recognitions.runtimeType);
             print(recognitions);
             getOutput(recognitions.toList()[0]);
-
-            //return recognitions.toString();
-            /*Alert(
-                style: AlertStyle(
-                  backgroundColor:
-                      Color(0x5F90A4AE), //Colors.blueGrey//Color(0x551761a0),
-                  overlayColor: Color(0xCF000000),
-                ),
-                context: context,
-                title: "",
-                content: //fdwModel.modelLoaded ?
-                    Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      recognitions.toString(),
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    UveaTextButton(
-                      "OK",
-                      onPressed: () async {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                  ],
-                ),
-                /*: Text(
-                              "Model is loading, please try again.",
-                              style: TextStyle(color: Colors.white),
-                            )*/
-                buttons: [
-                  DialogButton(
-                    color: Colors.white,
-                    height: 0,
-                  ),
-                ]).show();*/
           });
         } on PlatformException catch (e) {
           print(e.message);
@@ -131,7 +87,17 @@ class _MoneyClassifierScreenState extends State<MoneyClassifierScreen> {
         centerTitle: true,
         backgroundColor: Colors.transparent,
       ),
-      body: SafeArea(child: Container(child: widget.camera)),
+      body: SafeArea(
+        child: MaterialButton(
+          onLongPress: () {
+            flutterTts.setSpeechRate(0.85);
+            flutterTts.speak('Swipe right to open collision prevention... '
+                '... Long press the screen to repeat the instructions... '
+                'Current mode: money classifier.');
+          },
+          child: widget.camera,
+        ),
+      ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
         child: BodyText(

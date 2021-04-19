@@ -4,7 +4,6 @@ import 'package:uvea/components/bodyText.dart';
 import 'package:uvea/components/uveaTextButton.dart';
 import 'package:uvea/screens/onboardingScreen/onboardingScreen.dart';
 import 'package:uvea/screens/perspectivesScreen/perspectivesScreen.dart';
-import 'file:///C:/Users/mesha/Desktop/Semester%208/FYP%202/Uvea/lib/screens/onboardingScreen/background.dart';
 
 import '../../components/bodyText.dart';
 import 'dart:async';
@@ -28,6 +27,7 @@ void callScreen(context, firstTime, camera) {
         MaterialPageRoute(
           builder: (context) => onboardingScreen(
             cameras: camera,
+            firstTime: firstTime,
           ),
         ),
       ),
@@ -40,6 +40,7 @@ void callScreen(context, firstTime, camera) {
         MaterialPageRoute(
           builder: (context) => PerspectivesScreen(
             cameras: camera,
+            firstTime: firstTime,
           ),
         ),
       ),

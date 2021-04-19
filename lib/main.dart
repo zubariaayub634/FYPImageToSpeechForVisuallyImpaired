@@ -5,7 +5,7 @@ import 'package:uvea/screens/splashScreen/splashScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 List<CameraDescription> cameras;
-var initScreen;
+var initScreen = 1;
 
 Future<Null> main() async {
   WidgetsFlutterBinding.ensureInitialized();

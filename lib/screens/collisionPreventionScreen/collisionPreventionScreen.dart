@@ -14,8 +14,10 @@ import 'fdwClassifierModel.dart';
 
 class CollisionPreventionScreen extends StatefulWidget {
   final Camera camera;
+  final int firstTime;
 
-  CollisionPreventionScreen({Key key, this.camera}) : super(key: key) {
+  CollisionPreventionScreen({Key key, this.camera, this.firstTime})
+      : super(key: key) {
     //fdwModel.loadModel();
   }
 
@@ -29,25 +31,40 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
       "assets/fdwModel/model_unquant.tflite", "assets/fdwModel/labels.txt");
 
   Timer timer;
+  bool title = false;
   void initState() {
     super.initState();
-    timer =
-        Timer.periodic(Duration(seconds: 5), (Timer t) => takePicture(context));
+    instructions();
   }
 
-  /*callTimer(context) {
-    Timer(Duration(milliseconds: 3000), () {
-      //after 3 seconds this will be called,
-      //once this is called take picture or whatever function you need to do
-      takePicture(context);
-    });
-  }*/
-
-  getOutput(List) {
+  getOutput(List) async {
     var str = List.toString();
     var str2 = str.split(",");
     var str3 = str2[2].split(" ");
+    await flutterTts.awaitSpeakCompletion(true);
     flutterTts.speak(str3[3]);
+  }
+
+  instructions() {
+    final FlutterTts flutterTtss = FlutterTts();
+    flutterTts.setSpeechRate(0.9);
+
+    if (widget.firstTime == 0 || widget.firstTime == null) {
+      Timer(Duration(seconds: 2), () {
+        flutterTts.speak('Swipe left to open money classifier... '
+            'Long press the screen to repeat the instructions... '
+            'Current mode: collision prevention... ');
+        Timer(Duration(seconds: 2), () {
+          timer = Timer.periodic(
+              Duration(seconds: 5), (Timer t) => takePicture(context));
+        });
+      });
+    } else {
+      flutterTts.speak('collision prevention');
+      timer = Timer.periodic(
+          Duration(seconds: 5), (Timer t) => takePicture(context));
+    }
+    //Timer(Duration(seconds: 4), () {});
   }
 
   takePicture(context) async {
@@ -75,50 +92,6 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
             print(recognitions.runtimeType);
             print(recognitions);
             getOutput(recognitions.toList()[0]);
-
-            //return recognitions.toString();
-            /*Alert(
-                style: AlertStyle(
-                  backgroundColor:
-                      Color(0x5F90A4AE), //Colors.blueGrey//Color(0x551761a0),
-                  overlayColor: Color(0xCF000000),
-                ),
-                context: context,
-                title: "",
-                content: //fdwModel.modelLoaded ?
-                    Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      recognitions.toString(),
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    UveaTextButton(
-                      "OK",
-                      onPressed: () async {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                  ],
-                ),
-                /*: Text(
-                              "Model is loading, please try again.",
-                              style: TextStyle(color: Colors.white),
-                            )*/
-                buttons: [
-                  DialogButton(
-                    color: Colors.white,
-                    height: 0,
-                  ),
-                ]).show();*/
           });
         } on PlatformException catch (e) {
           print(e.message);
@@ -130,8 +103,7 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
   final FlutterTts flutterTts = FlutterTts();
   @override
   Widget build(BuildContext context) {
-    flutterTts.speak('Collision Prevention');
-
+    instructions();
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
@@ -140,7 +112,13 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
         backgroundColor: Colors.transparent,
       ),
       body: SafeArea(
-        child: Container(
+        child: MaterialButton(
+          onLongPress: () {
+            flutterTts.setSpeechRate(0.85);
+            flutterTts.speak('Swipe left to open money classifier... '
+                '... Long press the screen to repeat the instructions... '
+                'Current mode: collision prevention.');
+          },
           child: widget.camera,
         ),
       ),

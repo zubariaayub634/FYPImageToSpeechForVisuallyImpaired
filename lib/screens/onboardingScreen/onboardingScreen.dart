@@ -7,11 +7,10 @@ import 'package:camera/camera.dart';
 
 class onboardingScreen extends StatelessWidget {
   final List<CameraDescription> cameras;
+  final int firstTime;
 
-  onboardingScreen({
-    Key key,
-    this.cameras,
-  }) : super(
+  onboardingScreen({Key key, this.cameras, this.firstTime})
+      : super(
           key: key,
         );
 
@@ -44,6 +43,7 @@ class onboardingScreen extends StatelessWidget {
                     builder: (context) {
                       return PerspectivesScreen(
                         cameras: cameras,
+                        firstTime: firstTime,
                       );
                     },
                   ),

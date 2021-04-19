@@ -8,8 +8,9 @@ class PerspectivesScreen extends StatelessWidget {
   final List<CameraDescription> cameras;
 
   final Camera camera;
+  final int firstTime;
 
-  PerspectivesScreen({Key key, this.cameras})
+  PerspectivesScreen({Key key, this.cameras, this.firstTime})
       : camera = Camera(cameras[0]),
         super(key: key);
   final controller = PageController(
@@ -19,6 +20,7 @@ class PerspectivesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Widget collisionPreventer = (CollisionPreventionScreen(
       camera: camera,
+      firstTime: firstTime,
     ));
     final Widget moneyClassifier = (MoneyClassifierScreen(
       camera: camera,
