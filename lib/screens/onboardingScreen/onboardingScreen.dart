@@ -4,6 +4,7 @@ import 'package:uvea/components/uveaTextButton.dart';
 import 'package:uvea/screens/perspectivesScreen/perspectivesScreen.dart';
 import 'file:///C:/Users/mesha/Desktop/Semester%208/FYP%202/Uvea/lib/screens/onboardingScreen/background.dart';
 import 'package:camera/camera.dart';
+import 'dart:async';
 
 class onboardingScreen extends StatelessWidget {
   final List<CameraDescription> cameras;
@@ -14,8 +15,26 @@ class onboardingScreen extends StatelessWidget {
           key: key,
         );
 
+  callScreen(context) {
+    Timer(
+      Duration(seconds: 10),
+      () => Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return PerspectivesScreen(
+              cameras: cameras,
+              firstTime: firstTime,
+            );
+          },
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    callScreen(context);
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -30,8 +49,9 @@ class onboardingScreen extends StatelessWidget {
               //scale: 0.9,
             ),
             Padding(padding: EdgeInsets.only(top: 20)),
-            BodyText("A mobile application for day-to-day aid of"),
-            BodyText("visually impaired."),
+            BodyText("A mobile application for day-to-day aid of"
+                " visually impaired helping you detect macro objects &"
+                "count money"),
             Padding(padding: EdgeInsets.only(top: 50)),
             UveaTextButton(
               "Get Started",
