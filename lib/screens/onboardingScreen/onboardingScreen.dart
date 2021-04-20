@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:uvea/components/bodyText.dart';
 import 'package:uvea/components/uveaTextButton.dart';
 import 'package:uvea/screens/perspectivesScreen/perspectivesScreen.dart';
-import 'file:///C:/Users/mesha/Desktop/Semester%208/FYP%202/Uvea/lib/screens/onboardingScreen/background.dart';
 import 'package:camera/camera.dart';
 
-class onboardingScreen extends StatelessWidget {
+class OnboardingScreen extends StatelessWidget {
   final List<CameraDescription> cameras;
 
-  onboardingScreen({
+  OnboardingScreen({
     Key key,
     this.cameras,
   }) : super(
