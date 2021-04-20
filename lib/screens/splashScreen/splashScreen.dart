@@ -1,13 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:uvea/components/bodyText.dart';
-import 'package:uvea/components/uveaTextButton.dart';
 import 'package:uvea/screens/onboardingScreen/onboardingScreen.dart';
 import 'package:uvea/screens/perspectivesScreen/perspectivesScreen.dart';
-
-import '../../components/bodyText.dart';
 import 'dart:async';
-import 'package:camera/camera.dart';
 
 class SplashScreen extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -25,7 +20,7 @@ void callScreen(context, firstTime, camera) {
       () => Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => onboardingScreen(
+          builder: (context) => OnboardingScreen(
             cameras: camera,
             firstTime: firstTime,
           ),
