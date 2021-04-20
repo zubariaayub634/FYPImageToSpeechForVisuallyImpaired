@@ -36,9 +36,6 @@ data/obj/test/STR_S4_185.jpg
 data/obj/test/STR_S4_186.jpg
 data/obj/test/STR_S4_187.jpg
 data/obj/test/STR_S4_188.jpg
-data/obj/test/STR_S4_189.jpg
-data/obj/test/STR_S4_190.jpg
-data/obj/test/STR_S4_191.jpg
 data/obj/test/STR_S4_192.jpg
 data/obj/test/STR_S4_193.jpg
 data/obj/test/STR_S4_194.jpg
