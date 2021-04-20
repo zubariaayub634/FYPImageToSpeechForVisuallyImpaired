@@ -9,6 +9,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 
 import 'fdwClassifierModel.dart';
 import 'staircaseClassifierModel.dart';
+import 'package:flutter/services.dart';
 
 class CollisionPreventionScreen extends StatefulWidget {
   final Camera camera;
@@ -29,8 +30,12 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
   final FDWClassifierModel fdwModel = FDWClassifierModel(
       "assets/fdwModel/model_unquant.tflite", "assets/fdwModel/labels.txt");
 
+  final StaircaseClassifierModel staircaseModel = StaircaseClassifierModel(
+      "assets/staircaseModel/staircase_model.tflite",
+      "assets/staircaseModel/labels.txt");
+
   Timer timer;
-  bool title = false;
+  //bool title = false;
 
   void initState() {
     super.initState();
@@ -120,6 +125,7 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
   final FlutterTts flutterTts = FlutterTts();
   @override
   Widget build(BuildContext context) {
+    HapticFeedback.vibrate();
     //instructions();
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -131,6 +137,7 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
       body: SafeArea(
         child: MaterialButton(
           onLongPress: () {
+            HapticFeedback.vibrate();
             flutterTts.setSpeechRate(0.85);
             flutterTts.speak('Swipe left to open money classifier... '
                 '... Long press the screen to repeat the instructions... '

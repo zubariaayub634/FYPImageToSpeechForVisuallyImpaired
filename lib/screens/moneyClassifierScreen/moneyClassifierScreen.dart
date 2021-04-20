@@ -2,14 +2,13 @@ import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:tflite/tflite.dart';
-import 'package:uvea/components/uveaTextButton.dart';
 import 'package:uvea/components/camera.dart';
 import 'package:uvea/components/bodyText.dart';
 import 'moneyClassifierModel.dart';
 import 'dart:async';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:flutter/services.dart';
 
 class MoneyClassifierScreen extends StatefulWidget {
   final Camera camera;
@@ -82,6 +81,7 @@ class _MoneyClassifierScreenState extends State<MoneyClassifierScreen> {
 
   @override
   Widget build(BuildContext context) {
+    HapticFeedback.vibrate();
     flutterTts.speak('Money Classifier');
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -94,6 +94,7 @@ class _MoneyClassifierScreenState extends State<MoneyClassifierScreen> {
       body: SafeArea(
         child: MaterialButton(
           onLongPress: () {
+            HapticFeedback.vibrate();
             flutterTts.setSpeechRate(0.85);
             flutterTts.speak('Swipe right to open collision prevention... '
                 '... Long press the screen to repeat the instructions... '

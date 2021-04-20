@@ -34,3 +34,5 @@ flutter:
     - assets/fdwModel/labels.txt
     - assets/fdwModel/model.tflite
     - assets/fdwModel/model_unquant.tflite
+    - assets/staircaseModel/staircase_model.tflite
+    - assets/staircaseModel/labels.txt
