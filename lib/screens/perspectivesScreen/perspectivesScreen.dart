@@ -14,7 +14,7 @@ class PerspectivesScreen extends StatelessWidget {
       : camera = Camera(cameras[0]),
         super(key: key);
   final controller = PageController(
-    initialPage: 0,
+    initialPage: 999,
   );
   @override
   Widget build(BuildContext context) {
@@ -25,12 +25,12 @@ class PerspectivesScreen extends StatelessWidget {
     final Widget moneyClassifier = (MoneyClassifierScreen(
       camera: camera,
     ));
-    return PageView(
+    return PageView.builder(
       controller: controller,
-      children: <Widget>[
-        collisionPreventer,
-        moneyClassifier,
-      ],
+      itemBuilder: (context, index) {
+        if (index % 2 == 0) return collisionPreventer;
+        return moneyClassifier;
+      },
     );
   }
 }
