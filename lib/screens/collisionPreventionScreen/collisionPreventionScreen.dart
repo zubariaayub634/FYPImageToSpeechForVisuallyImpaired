@@ -100,9 +100,9 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
         try {
           int startTime = new DateTime.now().millisecondsSinceEpoch;
           //await Tflite.close();
-          if (picsTaken % 2 == 0)
-            await fdwModel.loadModel();
-          else
+          //if (picsTaken % 2 == 0)
+           //await fdwModel.loadModel();
+          //else
             await staircaseModel.loadModel();
           await Tflite.runModelOnFrame(
             bytesList: img.planes.map(
@@ -119,7 +119,7 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
             print(recognitions.runtimeType);
             print(recognitions);
             getOutput(recognitions.toList()[0]);
-            picsTaken+=1;
+            //picsTaken+=1;
           });
         } on PlatformException catch (e) {
           print(e.message);
