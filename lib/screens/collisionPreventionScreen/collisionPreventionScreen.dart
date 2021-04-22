@@ -9,14 +9,16 @@ import 'package:flutter_tts/flutter_tts.dart';
 
 import 'fdwClassifierModel.dart';
 import 'staircaseClassifierModel.dart';
-import 'package:flutter/services.dart';
 
 class CollisionPreventionScreen extends StatefulWidget {
   final Camera camera;
   final int firstTime;
   bool spoken = false;
+  bool spoken2 = false;
+  final bool screenReader;
 
-  CollisionPreventionScreen({Key key, this.camera, this.firstTime})
+  CollisionPreventionScreen(
+      {Key key, this.camera, this.firstTime, this.screenReader})
       : super(key: key) {
     //fdwModel.loadModel();
   }
@@ -66,11 +68,11 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
       if (widget.spoken == true) {
         flutterTts.speak('Collision Prevention');
         Timer(Duration(seconds: 2), () {
-          timer = Timer.periodic(
-              Duration(seconds: 4), (Timer t) => takePicture(context));
+          /*timer = Timer.periodic(
+              Duration(seconds: 4), (Timer t) => takePicture(context));*/
         });
       } else {
-        Timer(Duration(seconds: 2), () {
+        Timer(Duration(seconds: 3), () {
           if (widget.spoken == false) {
             flutterTts.speak('Swipe left to open money classifier... '
                 'Long press the screen to repeat the instructions... '
@@ -78,21 +80,33 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
             widget.spoken = true;
           }
           Timer(Duration(seconds: 2), () {
-            timer = Timer.periodic(
-                Duration(seconds: 4), (Timer t) => takePicture(context));
+            /*timer = Timer.periodic(
+                Duration(seconds: 4), (Timer t) => takePicture(context));*/
           });
         });
       }
     } else {
-      flutterTts.speak('collision prevention');
-      timer = Timer.periodic(
-          Duration(seconds: 3), (Timer t) => takePicture(context));
+      if (widget.screenReader == false) {
+        if (widget.spoken == false) {
+          Timer(Duration(seconds: 2), () {
+            flutterTts.speak('collision prevention');
+          });
+        } else {
+          flutterTts.speak('collision prevention');
+        }
+      } else if (widget.screenReader == true && widget.spoken == true) {
+        flutterTts.speak('collision prevention');
+      }
+      widget.spoken = true;
+      /*timer = Timer.periodic(
+          Duration(seconds: 3), (Timer t) => takePicture(context));*/
     }
     //Timer(Duration(seconds: 4), () {});
   }
 
   takePicture(context) async {
     print("tapped on camera");
+    //await Future.delayed(Duration(milliseconds: 200));
     await widget.camera.controller.startImageStream(
       (CameraImage img) async {
         widget.camera.controller.stopImageStream();
@@ -145,7 +159,7 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
           onLongPress: () {
             HapticFeedback.vibrate();
             flutterTts.setSpeechRate(0.85);
-            flutterTts.speak('Swipe left to open money classifier... '
+            flutterTts.speak('Swipe left to open money classifier'
                 '... Long press the screen to repeat the instructions... '
                 'Current mode: collision prevention.');
           },

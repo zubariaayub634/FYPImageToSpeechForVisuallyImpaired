@@ -14,7 +14,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 void callScreen(context, firstTime, camera) {
-  if (firstTime == 0 || firstTime == null) {
+  if (firstTime == 0 || !firstTime == null) {
     Timer(
       Duration(seconds: 3),
       () => Navigator.pushReplacement(
@@ -23,6 +23,7 @@ void callScreen(context, firstTime, camera) {
           builder: (context) => OnboardingScreen(
             cameras: camera,
             firstTime: firstTime,
+            screenReader: screenReaderOn(context),
           ),
         ),
       ),
@@ -36,10 +37,20 @@ void callScreen(context, firstTime, camera) {
           builder: (context) => PerspectivesScreen(
             cameras: camera,
             firstTime: firstTime,
+            screenReader: screenReaderOn(context),
           ),
         ),
       ),
     );
+  }
+}
+
+bool screenReaderOn(context) {
+  final mediaQueryData = MediaQuery.of(context);
+  if (mediaQueryData.accessibleNavigation) {
+    return true;
+  } else {
+    return false;
   }
 }
 
