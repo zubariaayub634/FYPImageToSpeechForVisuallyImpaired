@@ -14,7 +14,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 void callScreen(context, firstTime, camera) {
-  if (firstTime == 0 || !firstTime == null) {
+  if (firstTime == 0 || firstTime == null) {
     Timer(
       Duration(seconds: 3),
       () => Navigator.pushReplacement(
