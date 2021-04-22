@@ -3,3 +3,5 @@
 2 chair
 3 bed
 4 door
+5 upstairs
+6 downstairs
