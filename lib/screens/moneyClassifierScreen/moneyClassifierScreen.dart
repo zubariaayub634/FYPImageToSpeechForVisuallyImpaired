@@ -33,13 +33,14 @@ class _MoneyClassifierScreenState extends State<MoneyClassifierScreen> {
         Timer.periodic(Duration(seconds: 3), (Timer t) => takePicture(context));
   }
 
-  getOutput(List) {
+  getOutput(List) async {
     var str = List.toString();
     var str2 = str.split(",");
     var str3 = str2[0].split(" ");
     var confidence = double.parse(str3[1]);
     if (confidence > 0.8) {
       var str4 = str2[2].split(" ");
+      await flutterTts.awaitSpeakCompletion(true);
       flutterTts.speak(str4[3] + 'Rupees');
     }
   }
