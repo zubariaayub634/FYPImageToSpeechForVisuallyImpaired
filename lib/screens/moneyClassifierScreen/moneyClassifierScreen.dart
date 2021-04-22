@@ -46,6 +46,7 @@ class _MoneyClassifierScreenState extends State<MoneyClassifierScreen> {
 
   takePicture(context) async {
     print("tapped on camera");
+
     await widget.camera.controller.startImageStream(
       (CameraImage img) async {
         widget.camera.controller.stopImageStream();
@@ -96,7 +97,7 @@ class _MoneyClassifierScreenState extends State<MoneyClassifierScreen> {
           onLongPress: () {
             HapticFeedback.vibrate();
             flutterTts.setSpeechRate(0.85);
-            flutterTts.speak('Swipe right to open collision prevention... '
+            flutterTts.speak('Swipe right to open collision prevention '
                 '... Long press the screen to repeat the instructions... '
                 'Current mode: money classifier.');
           },

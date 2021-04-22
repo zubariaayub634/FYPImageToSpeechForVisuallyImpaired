@@ -9,7 +9,6 @@ import 'package:flutter_tts/flutter_tts.dart';
 
 import 'fdwClassifierModel.dart';
 import 'staircaseClassifierModel.dart';
-import 'package:flutter/services.dart';
 
 class CollisionPreventionScreen extends StatefulWidget {
   final Camera camera;
@@ -39,6 +38,7 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
 
   void initState() {
     super.initState();
+
     instructions();
   }
 
@@ -91,6 +91,7 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
 
   takePicture(context) async {
     print("tapped on camera");
+    //await Future.delayed(Duration(milliseconds: 200));
     await widget.camera.controller.startImageStream(
       (CameraImage img) async {
         widget.camera.controller.stopImageStream();
@@ -139,7 +140,7 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
           onLongPress: () {
             HapticFeedback.vibrate();
             flutterTts.setSpeechRate(0.85);
-            flutterTts.speak('Swipe left to open money classifier... '
+            flutterTts.speak('Swipe left to open money classifier'
                 '... Long press the screen to repeat the instructions... '
                 'Current mode: collision prevention.');
           },
