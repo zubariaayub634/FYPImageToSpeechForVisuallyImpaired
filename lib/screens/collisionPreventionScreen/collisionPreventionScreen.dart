@@ -68,8 +68,8 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
       if (widget.spoken == true) {
         flutterTts.speak('Collision Prevention');
         Timer(Duration(seconds: 2), () {
-          /*timer = Timer.periodic(
-              Duration(seconds: 4), (Timer t) => takePicture(context));*/
+          timer = Timer.periodic(
+              Duration(seconds: 4), (Timer t) => takePicture(context));
         });
       } else {
         Timer(Duration(seconds: 3), () {
@@ -80,8 +80,8 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
             widget.spoken = true;
           }
           Timer(Duration(seconds: 2), () {
-            /*timer = Timer.periodic(
-                Duration(seconds: 4), (Timer t) => takePicture(context));*/
+            timer = Timer.periodic(
+                Duration(seconds: 4), (Timer t) => takePicture(context));
           });
         });
       }
@@ -98,8 +98,8 @@ class _CollisionPreventionScreenState extends State<CollisionPreventionScreen> {
         flutterTts.speak('collision prevention');
       }
       widget.spoken = true;
-      /*timer = Timer.periodic(
-          Duration(seconds: 3), (Timer t) => takePicture(context));*/
+      timer = Timer.periodic(
+          Duration(seconds: 3), (Timer t) => takePicture(context));
     }
     //Timer(Duration(seconds: 4), () {});
   }
