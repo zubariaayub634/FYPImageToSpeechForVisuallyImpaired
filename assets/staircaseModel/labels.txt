@@ -1,2 +1,2 @@
-0 Upstairs
-1 Downstairs
+0 upstairs
+1 downstairs
