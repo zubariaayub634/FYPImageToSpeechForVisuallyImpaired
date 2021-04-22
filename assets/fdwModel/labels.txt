@@ -1,5 +1,2 @@
-0 sofa
-1 table
-2 chair
-3 bed
-4 door
+0 upstairs
+1 downstairs
